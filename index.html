@@ -25,6 +25,7 @@
         var rightPressed = false;
         var leftPressed = false;
         var score = 0;
+        var lives = 3;
         //bricks
         var brickRowCount = 3;
         var brickColumnCount = 5;
@@ -49,6 +50,7 @@
             drawScore();
             drawBricks();
             collisionDetection();
+            drawLives();
             //walls
             if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
             dx = -dx;
@@ -61,9 +63,19 @@
                     dy = -dy;
                 }
                 else {
-                    alert("GAME OVER");
-                    document.location.reload();
-                    clearInterval(interval);
+                    lives--;
+                    if(!lives) {
+                        alert("GAME OVER");
+                        document.location.reload();
+                        clearInterval(interval); // Needed for Chrome to end game
+                    }
+                    else {
+                        x = canvas.width/2;
+                        y = canvas.height-30;
+                        dx = 2;
+                        dy = -2;
+                        paddleX = (canvas.width-paddleWidth)/2;
+                    }
                 }
             }
             //paddle move
@@ -76,10 +88,16 @@
 
             x += dx;
             y += dy;
+            requestAnimationFrame(draw);
         }
-        var interval = setInterval(draw, 10);
+        draw();
 
         //functions
+        function drawLives() {
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "#0095DD";
+            ctx.fillText("Lives: "+lives, canvas.width-65, 20);
+        }
         function drawScore() {
             ctx.font = "16px Arial";
             ctx.fillStyle = "#0095DD";
@@ -97,7 +115,6 @@
                             if(score == brickRowCount*brickColumnCount) {
                                 alert("YOU WIN, CONGRATULATIONS!");
                                 document.location.reload();
-                                clearInterval(interval);
                             }
                         }
                     }
