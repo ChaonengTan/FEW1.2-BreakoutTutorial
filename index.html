@@ -22,17 +22,27 @@
         var paddleHeight = 10;
         var paddleWidth = 75;
         var paddleX = (canvas.width-paddleWidth) / 2;
-        
+        var rightPressed = false;
+        var leftPressed = false;
+
         //main exe
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             drawBall();
-
+            drawPaddle();
+            //walls
             if(x + dx > canvas.width-ballRadius || x + dx < ballRadius) {
             dx = -dx;
             }
             if(y + dy > canvas.height-ballRadius || y + dy < ballRadius) {
                 dy = -dy;
+            }
+            //paddle move
+            if(rightPressed) {
+                paddleX += 7;
+            }
+            else if(leftPressed) {
+                paddleX -= 7;
             }
 
             x += dx;
@@ -55,6 +65,26 @@
             ctx.fill();
             ctx.closePath();
         }
+        function keyDownHandler(e) {
+            if(e.key == "Right" || e.key == "ArrowRight") {
+                rightPressed = true;
+            }
+            else if(e.key == "Left" || e.key == "ArrowLeft") {
+                leftPressed = true;
+            }
+        }
+
+        function keyUpHandler(e) {
+            if(e.key == "Right" || e.key == "ArrowRight") {
+                rightPressed = false;
+            }
+            else if(e.key == "Left" || e.key == "ArrowLeft") {
+                leftPressed = false;
+            }
+        }
+        //event handlers
+        document.addEventListener("keydown", keyDownHandler, false);
+        document.addEventListener("keyup", keyUpHandler, false);
     </script>
 </body>
 </html>
