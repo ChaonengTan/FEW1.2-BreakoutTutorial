@@ -135,6 +135,12 @@
             ctx.fill();
             ctx.closePath();
         }
+        function mouseMoveHandler(e) {
+            var relativeX = e.clientX - canvas.offsetLeft;
+            if(relativeX > 0 && relativeX < canvas.width) {
+                paddleX = relativeX - paddleWidth/2;
+            }
+        }
         function keyDownHandler(e) {
             if(e.key == "Right" || e.key == "ArrowRight") {
                 rightPressed = true;
@@ -153,6 +159,7 @@
             }
         }
         //event handlers
+        document.addEventListener("mousemove", mouseMoveHandler, false);
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
     </script>
