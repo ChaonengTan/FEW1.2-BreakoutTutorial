@@ -34,17 +34,17 @@ for (let c = 0; c < brickColumnCount; c += 1) {
 function drawLives() {
   ctx.font = '16px Arial';
   ctx.fillStyle = '#0095DD';
-  ctx.fillText('Lives: ' + lives, canvas.width - 65, 20);
+  ctx.fillText(`Lives: ${lives}`, canvas.width - 65, 20);
 }
 function drawScore() {
   ctx.font = '16px Arial';
   ctx.fillStyle = '#0095DD';
-  ctx.fillText('Score: ' + score, 8, 20);
+  ctx.fillText(`Score: ${score}`, 8, 20);
 }
 function collisionDetection() {
   for (let c = 0; c < brickColumnCount; c += 1) {
     for (let r = 0; r < brickRowCount; r += 1) {
-      var b = bricks[c][r];
+      const b = bricks[c][r];
       if (b.status === 1) {
         if (x > b.x && x < b.x + brickWidth && y > b.y && y < b.y + brickHeight) {
           dy = -dy;
@@ -99,8 +99,7 @@ function mouseMoveHandler(e) {
 function keyDownHandler(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
     rightPressed = true;
-  }
-  else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
     leftPressed = true;
   }
 }
@@ -108,8 +107,7 @@ function keyDownHandler(e) {
 function keyUpHandler(e) {
   if (e.key === 'Right' || e.key === 'ArrowRight') {
     rightPressed = false;
-  }
-  else if (e.key === 'Left' || e.key === 'ArrowLeft') {
+  } else if (e.key === 'Left' || e.key === 'ArrowLeft') {
     leftPressed = false;
   }
 }
@@ -133,32 +131,27 @@ function draw() {
   }
   if (y + dy < ballRadius) {
     dy = -dy;
-  }
-  else if (y + dy > canvas.height - ballRadius) {
+  } else if (y + dy > canvas.height - ballRadius) {
     if (x > paddleX && x < paddleX + paddleWidth) {
       dy = -dy;
-    }
-    else {
+    } else {
       lives -= 1;
       if (!lives) {
         alert('GAME OVER');
         document.location.reload();
-        clearInterval(interval); // Needed for Chrome to end game
-      }
-      else {
+      } else {
         x = canvas.width / 2;
         y = canvas.height - 30;
         dx = 2;
         dy = -2;
-        paddleX = (canvas.width - paddleWidth)/2;
+        paddleX = (canvas.width - paddleWidth) / 2;
       }
     }
   }
   // paddle move
   if (rightPressed) {
     paddleX += 7;
-  }
-  else if (leftPressed) {
+  } else if (leftPressed) {
     paddleX -= 7;
   }
 
