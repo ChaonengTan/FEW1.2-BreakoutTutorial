@@ -98,6 +98,29 @@ function drawPaddle() {
   ctx.fill();
   ctx.closePath();
 }
+// custom background
+function createGradiant() {
+  // skyGrad
+  const grd = ctx.createLinearGradient(0, 0, 0, 320);
+  grd.addColorStop(0, 'cornflowerblue');
+  grd.addColorStop(1, 'white');
+
+  ctx.fillStyle = grd;
+  ctx.fillRect(0, 0, 480, 320);
+}
+function drawCloud(xposition, yposition) {
+  // cloud
+  ctx.beginPath();
+  ctx.arc(xposition, yposition, 30, 0, Math.PI * 2);
+  ctx.arc(xposition + 30, yposition, 25, 0, Math.PI * 2);
+  ctx.fillStyle = 'white';
+  ctx.fill();
+}
+function drawBG() {
+  createGradiant();
+  drawCloud(100, 60);
+  drawCloud(300, 100);
+}
 // key/mouse handlers
 function mouseMoveHandler(e) {
   const relativeX = e.clientX - canvas.offsetLeft;
@@ -172,6 +195,7 @@ document.addEventListener('keyup', keyUpHandler, false);
 // main exe
 function draw() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
+  drawBG();
   drawElements();
   collisionDetection();
   drawLives();
